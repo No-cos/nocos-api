@@ -17,12 +17,22 @@ export class ReposService {
     try {
       const response = await axios.get(url, { params });
       const projects = response.data.items;
-      return projects;
+      const users = projects.map(project => project.user);
+      return {projects, users};
     } catch (error) {
       console.error('Failed to fetch projects:', error);
       return null;
     }
   }
+
+
+  // async getUserName(projectType, numProjects) {
+  //   const issueDetails = await this.searchNoCodeIssues(projectType, numProjects);
+  //   console.log(issueDetails)
+  //   // console.log(repoDetails.map((details) => details.user));
+  //   let user = issueDetails.map((details) => details.user);
+  //   return user;
+  // }
 
   async searchNoCodeProjects(numProjects: number) {
     const url = 'https://api.github.com/search/repositories';
