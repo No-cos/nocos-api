@@ -18,8 +18,24 @@ export class ReposController {
     return issues;
   }
 
-  @Get('no-code-projects/:numProjects')
-  async getNoCodeProjects(@Query() numProjects: number): Promise<any[]> {
-    return this.reposService.searchNoCodeProjects(numProjects);
-  }
+  // @Get('no-code-projects/:numProjects')
+  // async getNoCodeProjects(@Query() numProjects: number): Promise<any[]> {
+  //   return this.reposService.searchNoCodeProjects(numProjects);
+  // }
+
+  // @Get('/issue/:id')
+  // async searchNoCodeIssuesById(
+  //   @Param ('id') id: number
+  // ){
+  //   const issue = this.reposService.searchNoCodeIssuesById(id)
+  //   return issue
+  // }
+
+  // @Get('/user/:projectType')
+  // async getUserDetails(
+  //   @Param('projectType') projectType: string,
+  //   @Query('numProjects') numProjects: number,
+  // ){
+  //   return this.reposService.getUserName(projectType, numProjects)
+  // }
 }
