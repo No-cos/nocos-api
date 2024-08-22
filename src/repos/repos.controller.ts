@@ -6,14 +6,21 @@ export class ReposController {
   constructor(private readonly reposService: ReposService) {}
 
   @Get('no-code-issues/:projectType')
-  async getNoCodeIssues(
+  async filterNoCodeIssues(
     @Param('projectType') projectType: string,
     @Query('numProjects') numProjects: number,
   ) {
-    const issues = this.reposService.searchNoCodeIssues(
+    const issues = this.reposService.filterNoCodeIssues(
       projectType,
       numProjects,
     );
+    if (!issues) return 'No issues found';
+    return issues;
+  }
+
+  @Get('no-code-issues')
+  async getNoCodeIssues(@Query('numProjects') numProjects: number) {
+    const issues = this.reposService.getNoCodeIssues(numProjects);
     if (!issues) return 'No issues found';
     return issues;
   }

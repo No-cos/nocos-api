@@ -4,11 +4,10 @@ import axios from 'axios';
 
 @Injectable()
 export class ReposService {
-  async searchNoCodeIssues(projectType: string, numProjects: number) {
+  async fetchNoCodeIssues(query: string, numProjects: number) {
     const url = 'https://api.github.com/search/issues';
     const params = {
-      // q: 'label:no-code,nocode,documentation state:open',
-      q: `label:nocode,no-code,${projectType} state:open`,
+      q: query,
       sort: 'stars',
       order: 'desc',
       per_page: numProjects,
@@ -17,14 +16,23 @@ export class ReposService {
     try {
       const response = await axios.get(url, { params });
       const projects = response.data.items;
-      const users = projects.map(project => project.user);
-      return {projects, users};
+      const users = projects.map((project) => project.user);
+      return { projects, users };
     } catch (error) {
       console.error('Failed to fetch projects:', error);
       return null;
     }
   }
 
+  async filterNoCodeIssues(projectType: string, numProjects: number) {
+    const query = `label:nocode,no-code,${projectType} state:open`;
+    return await this.fetchNoCodeIssues(query, numProjects);
+  }
+
+  async getNoCodeIssues(numProjects: number) {
+    const query = `label:nocode,no-code,state:open`;
+    return await this.fetchNoCodeIssues(query, numProjects);
+  }
 
   // async getUserName(projectType, numProjects) {
   //   const issueDetails = await this.searchNoCodeIssues(projectType, numProjects);
